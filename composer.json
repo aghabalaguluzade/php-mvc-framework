@@ -1,0 +1,19 @@
+{
+    "name": "aghabalaguluzade/php-mvc-framework",
+    "description": "MVC framework for PHP",
+    "type": "framework",
+    "require": {
+        "vlucas/phpdotenv": "^5.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Aghabalaguluzade\\": "./"
+        }
+    },
+    "authors": [
+        {
+            "name": "aghabalaguluzade",
+            "email": "agabala.oyunda@gmail.com"
+        }
+    ]
+}
