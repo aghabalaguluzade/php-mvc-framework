@@ -7,18 +7,18 @@ class Route
     public static array $routes = [];
     public static bool $hasRoute = false;
     public static array $patterns = [
-        ':id' => '([0-9]+)',
-        ':url' => '([0-9a-zA-Z-_]+)'
+        ':id[0-9]?' => '([0-9]+)',
+        ':url[0-9]?' => '([0-9a-zA-Z-_]+)'
     ];
 
-    public static function get($path,$callback): Route {
+    public static function get(string $path, callable|string $callback): Route {
         self::$routes['get'][$path] = [
             'callback' => $callback
         ];
         return new self();
     }
 
-    public static function post($path,$callback): void {
+    public static function post(string $path, callable|string $callback): void {
         self::$routes['post'][$path] = [
             'callback' => $callback
         ];
@@ -33,7 +33,7 @@ class Route
             $callback = $payload['callback'];
 
             foreach(self::$patterns as $key => $pattern) {
-                $path = str_replace($key, $pattern, $path);
+                $path = preg_replace('#' . $key .'#', $pattern, $path);
             }
 
             $pattern = '#^' . $path . '(/)?$#';
@@ -73,8 +73,24 @@ class Route
     }
 
     public function name($name): void {
-        $key = array_key_last(self::$routes['get']);
-        self::$routes['get'][$key]['name'] = $name;
+        if(isset(self::$routes['get'])) {
+            $key = array_key_last(self::$routes['get']);
+            self::$routes['get'][$key]['name'] = $name;
+        }
+
+        if(isset(self::$routes['post'])) {
+            $key = array_key_last(self::$routes['post']);
+            self::$routes['post'][$key]['name'] = $name;
+        }
+    }
+
+    public static function url(string $name, array $params = []) {
+        $route = array_key_first(
+            array_filter(self::$routes['get'], function($route) use ($name) {
+                return $route['name'] === $name;
+            })
+        );
+        return str_replace(array_keys($params), array_values($params), $route);
     }
 
 }
