@@ -12,18 +12,25 @@ class Route
     ];
 
     public static function get($path,$callback): Route {
-        self::$routes['get'][$path] = $callback;
+        self::$routes['get'][$path] = [
+            'callback' => $callback
+        ];
+        return new self();
     }
 
     public static function post($path,$callback): void {
-        self::$routes['post'][$path] = $callback;
+        self::$routes['post'][$path] = [
+            'callback' => $callback
+        ];
     }
 
     public static function dispatch() {
         $method = self::getMethod();
         $url = self::getUrl();
 
-        foreach(self::$routes[$method] as $path => $callback) {
+        foreach(self::$routes[$method] as $path => $payload) {
+
+            $callback = $payload['callback'];
 
             foreach(self::$patterns as $key => $pattern) {
                 $path = str_replace($key, $pattern, $path);
@@ -63,6 +70,11 @@ class Route
 
     public static function getUrl(): string {
         return str_replace(getenv('BASE_PATH'), '', $_SERVER['REQUEST_URI']);
+    }
+
+    public function name($name): void {
+        $key = array_key_last(self::$routes['get']);
+        self::$routes['get'][$key]['name'] = $name;
     }
 
 }

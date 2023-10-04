@@ -12,13 +12,13 @@ $dotenv->load();
 
 Route::get('/', function() {
     return 'home page';
-});
+})->name('home');
 
 Route::get('/users', function() {
     return 'users page';
 });
 
-Route::get('/user/:id', 'UserController@show');
+Route::get('/user/:id', 'UserController@show')->name('user');
 
 Route::get('/controller', 'HomeController@index');
 
