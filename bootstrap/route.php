@@ -2,6 +2,8 @@
 
 namespace Aghabalaguluzade\bootstrap;
 
+use Closure;
+
 class Route
 {
     public static array $routes = [];
@@ -10,9 +12,10 @@ class Route
         ':id[0-9]?' => '([0-9]+)',
         ':url[0-9]?' => '([0-9a-zA-Z-_]+)'
     ];
+    public static string $prefix = '';
 
     public static function get(string $path, callable|string $callback): Route {
-        self::$routes['get'][$path] = [
+        self::$routes['get'][self::$prefix . $path] = [
             'callback' => $callback
         ];
         return new self();
@@ -35,9 +38,10 @@ class Route
             foreach(self::$patterns as $key => $pattern) {
                 $path = preg_replace('#' . $key .'#', $pattern, $path);
             }
+            
+            // $pattern = '#^' . $path . '$#';
+            $pattern = '#^' . rtrim($path, '/') . '/?$#';
 
-            $pattern = '#^' . $path . '(/)?$#';
-        
             if(preg_match($pattern, $url, $params)) {
                 array_shift($params);
                 self::$hasRoute = true;
@@ -91,6 +95,16 @@ class Route
             })
         );
         return str_replace(array_keys($params), array_values($params), $route);
+    }
+
+    public static function prefix($prefix): Route {
+        self::$prefix = $prefix;
+        return new self();
+    }
+
+    public static function group(\Closure $closure): void {
+        $closure();
+        self::$prefix = '';
     }
 
 }

@@ -8,12 +8,15 @@
     "autoload": {
         "psr-4": {
             "Aghabalaguluzade\\": "./"
-        }
+        },
+        "files" : [
+            "bootstrap/helpers.php"
+        ]
     },
     "authors": [
         {
             "name": "aghabalaguluzade",
-            "email": "agabala.oyunda@gmail.com"
+            "email": "agabalaguluzade@gmail.com"
         }
     ]
 }

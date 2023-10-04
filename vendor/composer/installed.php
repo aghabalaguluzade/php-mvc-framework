@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'aghabalaguluzade/php-mvc-framework',
-        'pretty_version' => '1.0.0+no-version-set',
-        'version' => '1.0.0.0',
-        'reference' => NULL,
+        'pretty_version' => 'dev-main',
+        'version' => 'dev-main',
+        'reference' => 'df7de68003c1569eebe968faea2d0b408df0189a',
         'type' => 'framework',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -11,9 +11,9 @@
     ),
     'versions' => array(
         'aghabalaguluzade/php-mvc-framework' => array(
-            'pretty_version' => '1.0.0+no-version-set',
-            'version' => '1.0.0.0',
-            'reference' => NULL,
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
+            'reference' => 'df7de68003c1569eebe968faea2d0b408df0189a',
             'type' => 'framework',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

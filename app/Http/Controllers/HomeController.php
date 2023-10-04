@@ -5,6 +5,6 @@ namespace Aghabalaguluzade\app\Http\Controllers;
 class HomeController 
 {
     public function index() {
-        return "home page";
+        return route('user', [':id' => 1]);
     }
 }
